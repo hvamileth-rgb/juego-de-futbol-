@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penales Cartagena ⚽</title>
+<style>
+body{margin:0;font-family:Arial;background:#0a7a42;color:white;text-align:center}
+h1{margin:10px}
+#marcador{font-size:22px;margin:10px}
+#cancha{width:95%;max-width:400px;height:320px;background:#2ecc71;margin:10px auto;border:4px solid white;border-radius:10px;position:relative;overflow:hidden}
+#arco{width:220px;height:90px;border:4px solid white;border-bottom:none;position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.2)}
+#arquero{font-size:50px;position:absolute;top:20px;left:50%;transform:translateX(-50%);transition:left 0.3s}
+#balon{font-size:45px;position:absolute;bottom:20px;left:50%;transform:translateX(-50%);transition:all 0.4s}
+button{padding:15px 20px;font-size:18px;border:none;border-radius:10px;margin:5px;background:#f1c40f;font-weight:bold}
+#mensaje{font-size:22px;font-weight:bold;margin:10px;min-height:30px}
+</style>
+</head>
+<body>
+<h1>⚽ PENALES CARTAGENA</h1>
+<div id="marcador">Goles: 0 | Fallos: 0</div>
+<div id="cancha">
+<div id="arco"></div>
+<div id="arquero">🧤</div>
+<div id="balon">⚽</div>
+</div>
+<div id="mensaje">¿A dónde pateas?</div>
+<button onclick="patear('izq')">⬅️ Izquierda</button>
+<button onclick="patear('centro')">⬆️ Centro</button>
+<button onclick="patear('der')">➡️ Derecha</button>
+<br><button onclick="location.reload()" style="background:white">🔄 Jugar de nuevo</button>
+<script>
+let goles=0, fallos=0;
+function patear(lado){
+  let arqueroLado=['izq','centro','der'][Math.floor(Math.random()*3)];
+  let arquero=document.getElementById('arquero');
+  let balon=document.getElementById('balon');
+  let msg=document.getElementById('mensaje');
+  if(arqueroLado=='izq') arquero.style.left='25%';
+  if(arqueroLado=='centro') arquero.style.left='50%';
+  if(arqueroLado=='der') arquero.style.left='75%';
+  if(lado=='izq') balon.style.left='20%';
+  if(lado=='centro') balon.style.left='50%';
+  if(lado=='der') balon.style.left='80%';
+  balon.style.bottom='180px';
+  setTimeout(()=>{
+    if(lado==arqueroLado){ fallos++; msg.innerText='😭 ¡ATAJÓ EL ARQUERO!'; msg.style.color='#ff6b6b'; }
+    else{ goles++; msg.innerText='🎉 ¡GOOOOOL!'; msg.style.color='#f1c40f'; }
+    document.getElementById('marcador').innerText=`Goles: ${goles} | Fallos: ${fallos}`;
+    if(fallos>=3){ msg.innerText='💔 Perdiste! Metiste '+goles+' goles'; }
+    setTimeout(()=>{ balon.style.left='50%'; balon.style.bottom='20px'; arquero.style.left='50%'; },800);
+  },500);
+}
+</script>
+</body>
+</html>
