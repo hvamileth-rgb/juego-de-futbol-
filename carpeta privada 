@@ -1,0 +1,44 @@
+DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Carpeta SENA</title>
+<style>
+body{font-family:Arial; padding:15px; background:#f0f2f5}
+h1{color:#00324d; text-align:center}
+input, textarea, select{width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ccc; font-size:16px}
+button{background:#39A900; color:white; padding:12px; width:100%; border:none; border-radius:8px; font-size:17px; margin-top:10px}
+.trabajo{background:white; padding:12px; border-radius:10px; margin-top:12px}
+</style>
+</head>
+<body>
+<h1>📁 Mi Carpeta SENA</h1>
+<p style="text-align:center">Privado - Solo en tu celular</p>
+
+<input id="titulo" placeholder="Título del trabajo">
+<input id="materia" placeholder="Materia - Ej: Programación">
+<textarea id="contenido" rows="6" placeholder="Escribe tu trabajo aquí..."></textarea>
+<button onclick="guardar()">💾 Guardar Trabajo</button>
+<button onclick="window.print()" style="background:#00324d">📄 Descargar como PDF</button>
+
+<div id="lista"></div>
+
+<script>
+let trabajos = JSON.parse(localStorage.getItem('sena') || '[]');
+function guardar(){
+  let t = {titulo: titulo.value, materia: materia.value, contenido: contenido.value};
+  if(!t.titulo) return alert('Ponle título');
+  trabajos.push(t);
+  localStorage.setItem('sena', JSON.stringify(trabajos));
+  mostrar();
+  titulo.value=''; materia.value=''; contenido.value='';
+  alert('¡Guardado en privado! 🔥');
+}
+function mostrar(){
+  lista.innerHTML = trabajos.map((x,i)=>`<div class="trabajo"><b>${x.titulo}</b><br><small>${x.materia}</small><p>${x.contenido}</p></div>`).join('');
+}
+mostrar();
+</script>
+</body>
+</html>
